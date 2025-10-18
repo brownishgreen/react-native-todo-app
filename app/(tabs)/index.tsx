@@ -1,8 +1,8 @@
-import { ThemedText } from '@/components/ThemedText'
 import { useState } from 'react'
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
-import { ThemedView } from '../components/ThemedView'
+import { ThemedView } from '../../components/ThemedView'
+import Header from '../../components/Header'
+import TodoPanel from '../../components/TodoPanel'
+import { StyleSheet } from 'react-native'
 
 // --- types ---
 type Todo = {
@@ -54,41 +54,8 @@ export default function HomeScreen() {
   // --- render ---
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Let's get things done  🚀</ThemedText>
-      {/* Input Row */}
-      <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="New Task"
-          value={input}
-          onChangeText={setInput}
-        />
-
-        <TouchableOpacity style={styles.customButton} onPress={addTodo}>
-          <Text style={styles.customButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Todo List */}
-      <FlatList
-        data={todos}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <TouchableOpacity onPress={() => checkTodo(item.id)}><FontAwesome
-                name={item.completed ? 'check-circle' : 'circle-o'}
-                size={20}
-                style={styles.checkIcon} /></TouchableOpacity>
-              <Text style={item.completed ? styles.todoTitleCompleted : styles.todoTitle}>{item.title}</Text>
-            </View>
-            <TouchableOpacity onPress={() => deleteTodo(item.id)}>
-              <FontAwesome name="trash-o" size={20} style={styles.deleteIcon} />
-            </TouchableOpacity>
-          </View>
-        )}
-        ListEmptyComponent={<Text>No tasks yet</Text>}
-      />
+      <Header />
+      <TodoPanel input={input} todos={todos} onChangeInput={setInput} onAdd={addTodo} onToggle={checkTodo} onDelete={deleteTodo} />
     </ThemedView>
   )
 }
