@@ -39,7 +39,12 @@ export default function HomeScreen() {
   }
 
   const checkTodo = (id: string) => {
-    setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+    setTodos(prev => {
+      const updatedTodos = prev.map(todo => 
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+      return updatedTodos.sort((a, b) => a.completed ? 1 : b.completed ? -1 : 0)
+    })
   }
 
   const deleteTodo = (id: string) => {
@@ -76,7 +81,6 @@ export default function HomeScreen() {
                 size={20}
                 style={styles.checkIcon} /></TouchableOpacity>
               <Text style={item.completed ? styles.todoTitleCompleted : styles.todoTitle}>{item.title}</Text>
-              <Text style={styles.todoStatus}>{item.completed ? 'Completed' : 'Pending'}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteTodo(item.id)}>
               <FontAwesome name="trash-o" size={20} style={styles.deleteIcon} />
@@ -154,6 +158,7 @@ const styles = StyleSheet.create({
   },
   todoTitleCompleted: {
     fontSize: 16,
+    color: '#777',
     fontWeight: '400',
     justifyContent: 'center',
     alignItems: 'center',
