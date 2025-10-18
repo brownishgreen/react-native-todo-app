@@ -1,14 +1,14 @@
-import { StyleSheet, TextInput, TouchableOpacity, FlatList, View, Text } from 'react-native'
-import { useState } from 'react'
-import { ThemedView } from '../components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
+import { useState } from 'react'
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
+import { ThemedView } from '../components/ThemedView'
 
 // --- types ---
 type Todo = {
   id: string
   title: string
   createdAt: string
-  category: 'urgent' | 'important' | 'normal'
   completed: boolean
 }
 
@@ -20,11 +20,9 @@ export default function HomeScreen() {
       id: 'example-1',
       title: 'Complete the project',
       createdAt: new Date().toISOString(),
-      category: 'important',
       completed: false,
     },
   ])
-  const [category, setCategory] = useState<'urgent' | 'important' | 'normal'>('normal')
   const [completed, setCompleted] = useState(false)
 
   // --- operations ---
@@ -34,11 +32,14 @@ export default function HomeScreen() {
       id: Date.now().toString(),
       title: input.trim(),
       createdAt: new Date().toISOString(),
-      category: category,
       completed: false,
     }
     setTodos(prev => [newTodo, ...prev])
     setInput('')
+  }
+
+  const checkTodo = (id: string) => {
+    setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
   }
 
   const deleteTodo = (id: string) => {
@@ -48,8 +49,7 @@ export default function HomeScreen() {
   // --- render ---
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Let's get things done</ThemedText>
-
+      <ThemedText style={styles.title}>Let's get things done  🚀</ThemedText>
       {/* Input Row */}
       <View style={styles.inputRow}>
         <TextInput
@@ -58,21 +58,9 @@ export default function HomeScreen() {
           value={input}
           onChangeText={setInput}
         />
+
         <TouchableOpacity style={styles.customButton} onPress={addTodo}>
           <Text style={styles.customButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Category Selector */}
-      <View style={styles.categoryRow}>
-        <TouchableOpacity style={styles.customButton} onPress={() => setCategory('urgent')}>
-          <Text style={styles.customButtonText}>Urgent</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.customButton} onPress={() => setCategory('important')}>
-          <Text style={styles.customButtonText}>Important</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.customButton} onPress={() => setCategory('normal')}>
-          <Text style={styles.customButtonText}>Normal</Text>
         </TouchableOpacity>
       </View>
 
@@ -82,12 +70,16 @@ export default function HomeScreen() {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <View style={{ flex: 1}}>
-              <Text style={styles.todoTitle}>{item.title}</Text>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <TouchableOpacity onPress={() => checkTodo(item.id)}><FontAwesome
+                name={item.completed ? 'check-circle' : 'circle-o'}
+                size={20}
+                style={styles.checkIcon} /></TouchableOpacity>
+              <Text style={item.completed ? styles.todoTitleCompleted : styles.todoTitle}>{item.title}</Text>
               <Text style={styles.todoStatus}>{item.completed ? 'Completed' : 'Pending'}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteTodo(item.id)}>
-              <Text style={styles.customButtonText}>Delete</Text>
+              <FontAwesome name="trash-o" size={20} style={styles.deleteIcon} />
             </TouchableOpacity>
           </View>
         )}
@@ -97,30 +89,81 @@ export default function HomeScreen() {
   )
 }
 
+// --- styles ---
 const styles = StyleSheet.create({
   container: {
-    flex: 1, padding: 16, gap: 12, backgroundColor: '#F5F5F5'
+    flex: 1,
+    padding: 24,
+    gap: 12,
+    backgroundColor: '#F5F5F5'
   },
-  title: { fontSize: 14, fontWeight: '400', marginBottom: 16, color: '#666' },
-  inputRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  input: { flex: 1, borderWidth: 1, backgroundColor: '#fff', borderColor: '#ccc', borderRadius: 8, padding: 8 },
+  title: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#666'
+  },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    height: 40
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 8
+  },
   customButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#0a72eb',
     padding: 8,
     borderRadius: 8,
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  customButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
-  categoryRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  customButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '400'
+  },
+  checkIcon: {
+    color: '#0a72eb',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  deleteIcon: {
+    color: '#f5204a',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   item: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: '#eee',
-    paddingVertical: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
   },
-  todoTitle: { fontSize: 16, fontWeight: '600', marginBottom: 4 },
-  todoStatus: { fontSize: 12, color: '#666' },
+  todoTitle: {
+    fontSize: 16,
+    fontWeight: '400',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  todoTitleCompleted: {
+    fontSize: 16,
+    fontWeight: '400',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textDecorationLine: 'line-through',
+  },
+  todoStatus: {
+    fontSize: 12,
+    fontWeight: '300',
+    color: '#666'
+  },
 })
+
+
