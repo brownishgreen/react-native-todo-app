@@ -1,16 +1,15 @@
-import { useState } from 'react'
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { useModalStore } from '@/stores/useModalStore'
 
 // --- component ---
 export default function CompletionModal() {
-  const [isVisible, setIsVisible] = useState(true)
+  const { isVisible, closeModal } = useModalStore()
 
   return (
     <Modal
       visible={isVisible}
       animationType="fade"
       transparent
-      onRequestClose={() => setIsVisible(false)}
     >
       <View style={styles.overlay}>
         <View style={styles.modalBox}>
@@ -19,7 +18,7 @@ export default function CompletionModal() {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setIsVisible(false)}
+            onPress={closeModal}
           >
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
