@@ -1,5 +1,6 @@
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useModalStore } from '@/stores/useModalStore'
+import { buttonStyles } from '@/styles/buttonStyles'
 
 // --- component ---
 export default function CompletionModal() {
@@ -17,10 +18,10 @@ export default function CompletionModal() {
           <Text style={styles.subtitle}>Good job! 😍</Text>
 
           <TouchableOpacity
-            style={styles.button}
+            style={[buttonStyles.base, buttonStyles.primary]}
             onPress={closeModal}
           >
-            <Text style={styles.buttonText}>Continue</Text>
+            <Text style={buttonStyles.text}>Continue</Text>
           </TouchableOpacity>
         </View>
       </View>

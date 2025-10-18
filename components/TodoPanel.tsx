@@ -1,5 +1,7 @@
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import TodoItem from '@/components/TodoItem'
+import { buttonStyles } from '@/styles/buttonStyles'
+
 
 type Todo = {
   id: string
@@ -28,8 +30,8 @@ export default function TodoPanel({ input, todos, onChangeInput, onAdd, onToggle
           value={input}
           onChangeText={onChangeInput}
         />
-        <TouchableOpacity style={styles.addButton} onPress={onAdd}>
-          <Text style={styles.addText}>Add</Text>
+        <TouchableOpacity style={[buttonStyles.primary, buttonStyles.base]} onPress={onAdd}>
+          <Text style={buttonStyles.text}>Add</Text>
         </TouchableOpacity>
       </View>
 
@@ -65,17 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 8,
-  },
-  addButton: {
-    backgroundColor: '#0a72eb',
-    padding: 8,
-    borderRadius: 8,
-    width: '18%',
-    alignItems: 'center',
-  },
-  addText: {
-    color: '#fff',
-    fontSize: 14,
   },
   empty: {
     textAlign: 'center',
