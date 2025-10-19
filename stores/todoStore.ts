@@ -20,7 +20,7 @@ export const useTodoStore = create<TodoStore>((set, get) => ({
     },
     {
       id: '2',
-      title: 'Focus and complete it with discipline',
+      title: 'Focus! Complete it w/ Discipline',
       completed: false,
       createdAt: new Date().toISOString(),
     },
