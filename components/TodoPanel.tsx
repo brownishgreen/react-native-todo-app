@@ -34,6 +34,8 @@ export default function TodoPanel({ input, todos, onChangeInput, onAdd, onToggle
           placeholder="New Task"
           value={input}
           onChangeText={onChangeInput}
+          returnKeyType="done"
+          onSubmitEditing={onAdd}
         />
         <TouchableOpacity style={[buttonStyles.primary, buttonStyles.base]} onPress={onAdd}>
           <ThemedText style={buttonStyles.text}>Add</ThemedText>

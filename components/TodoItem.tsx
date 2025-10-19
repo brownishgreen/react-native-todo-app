@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     color: '#0a72eb',
   },
   deleteIcon: {
-    color: '#f5204a',
+    color: '#999',
   },
 })
