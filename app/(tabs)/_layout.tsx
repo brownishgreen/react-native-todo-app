@@ -1,23 +1,28 @@
 import { Tabs } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
-
+import { useThemeStore } from '@/stores/useThemeStore'
 export default function RootLayout() {
+
+  const theme = useThemeStore((state) => state.theme)
+  const isDarkMode = theme === 'dark'
   return (
     <Tabs
-    screenOptions={{
+      screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#0a72eb',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: isDarkMode ? '#4da3ff' : '#0a72eb',
+        tabBarInactiveTintColor: isDarkMode ? '#888' : '#999',
         tabBarStyle: {
-          backgroundColor: '#fff',
-          borderTopWidth: 0,
-          boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
+          backgroundColor: isDarkMode ? '#1a1a1a' : '#fff',
+          borderTopWidth: 0.5,
+          borderTopColor: isDarkMode ? '#333' : '#ddd',
         },
         tabBarLabelStyle: {
-          fontSize: 10,
-          fontWeight: '400',
-          paddingBottom: 4,
-        }
+          fontSize: 12,
+          fontWeight: '500',
+        },
+        tabBarIconStyle: {
+          marginBottom: -2,
+        },
       }}
     >
       <Tabs.Screen

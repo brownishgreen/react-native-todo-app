@@ -2,13 +2,11 @@ import { View, Text, StyleSheet, Switch } from 'react-native'
 import { useState } from 'react'
 import { ThemedView } from '@/components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 export default function SettingsScreen() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev)
-  } //temporary function to toggle dark mode later will go Zustand store
+  const { theme, toggleTheme } = useThemeStore()
+  const isDarkMode = theme === 'dark'
 
   return (
     <ThemedView style={styles.container}>
@@ -17,7 +15,7 @@ export default function SettingsScreen() {
       {/* Theme Switch */}
       <View style={styles.row}>
         <ThemedText style={styles.title}>Dark Mode</ThemedText>
-        <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
+        <Switch value={isDarkMode} onValueChange={toggleTheme} />
       </View>
 
       {/* Divider */}
@@ -25,10 +23,10 @@ export default function SettingsScreen() {
 
       {/* About */}
       <View>
-        <Text style={styles.aboutTitle}>About</Text>
-        <Text style={styles.aboutText}>Minimal Todo v1.0.0</Text>
-        <Text style={styles.aboutText}>Designed & Developed by Yuan WU</Text>
-        <Text style={styles.quote}>“Less noise, more clarity.”</Text>
+        <ThemedText style={styles.aboutTitle}>About</ThemedText>
+        <ThemedText style={styles.aboutText}>Minimal Todo v1.0.0</ThemedText>
+        <ThemedText style={styles.aboutText}>Designed & Developed by Yuan WU</ThemedText>
+        <ThemedText style={styles.quote}>“Less noise, more clarity.”</ThemedText>
       </View>
     </ThemedView>
   )
@@ -43,13 +41,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     marginBottom: 24,
-    color: '#333',
   },
   title: {
     fontSize: 20,
     fontWeight: '600',
     marginBottom: 24,
-    color: '#333',
   },
   row: {
     flexDirection: 'row',
@@ -69,7 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
   },
   aboutText: {
     fontSize: 14,

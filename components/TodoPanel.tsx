@@ -1,6 +1,9 @@
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import TodoItem from '@/components/TodoItem'
 import { buttonStyles } from '@/styles/buttonStyles'
+import { ThemedView } from '@/components/ThemedView'
+import { ThemedText } from '@/components/ThemedText'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 
 type Todo = {
@@ -20,20 +23,22 @@ type Props = {
 }
 
 export default function TodoPanel({ input, todos, onChangeInput, onAdd, onToggle, onDelete }: Props) {
+  const theme = useThemeStore((state) => state.theme)
+
   return (
-    <View>
+    <ThemedView>
       {/* Input */}
-      <View style={styles.inputRow}>
+      <ThemedView style={styles.inputRow}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme === 'light' ? '#333' : '#EDEDED' }]}
           placeholder="New Task"
           value={input}
           onChangeText={onChangeInput}
         />
         <TouchableOpacity style={[buttonStyles.primary, buttonStyles.base]} onPress={onAdd}>
-          <Text style={buttonStyles.text}>Add</Text>
+          <ThemedText style={buttonStyles.text}>Add</ThemedText>
         </TouchableOpacity>
-      </View>
+      </ThemedView>
 
       {/* List */}
       <FlatList
@@ -49,7 +54,7 @@ export default function TodoPanel({ input, todos, onChangeInput, onAdd, onToggle
         )}
         ListEmptyComponent={<Text style={styles.empty}>No tasks yet</Text>}
       />
-    </View>
+    </ThemedView>
   )
 }
 
@@ -64,13 +69,11 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 8,
   },
   empty: {
     textAlign: 'center',
-    color: '#999',
     marginTop: 12,
   },
 })

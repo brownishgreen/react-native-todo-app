@@ -1,6 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-
+import { useThemeStore } from '@/stores/useThemeStore'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 type Props = {
   title: string
   completed: boolean
@@ -10,8 +12,8 @@ type Props = {
 
 export default function TodoItem({ title, completed, onToggle, onDelete }: Props) {
   return (
-    <View style={styles.item}>
-      <View style={styles.left}>
+    <ThemedView style={styles.item}>
+      <ThemedView style={styles.left}>
         <TouchableOpacity onPress={onToggle}>
           <FontAwesome
             name={completed ? 'check-circle' : 'circle-o'}
@@ -19,12 +21,12 @@ export default function TodoItem({ title, completed, onToggle, onDelete }: Props
             style={styles.checkIcon}
           />
         </TouchableOpacity>
-        <Text style={completed ? styles.completedTitle : styles.title}>{title}</Text>
-      </View>
+        <ThemedText style={completed ? styles.completedTitle : styles.title}>{title}</ThemedText>
+      </ThemedView>
       <TouchableOpacity onPress={onDelete}>
         <FontAwesome name="trash-o" size={20} style={styles.deleteIcon} />
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   )
 }
 

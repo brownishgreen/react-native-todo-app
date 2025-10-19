@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { useTodoStore } from '@/stores/todoStore'
 import { ThemedView } from '@/components/ThemedView'
+import { ThemedText } from '@/components/ThemedText'
 import Svg, { Circle } from 'react-native-svg'
-
+import { useThemeStore } from '@/stores/useThemeStore'
 export default function StatsScreen() {
   const { todos } = useTodoStore()
-
+  const theme = useThemeStore((state) => state.theme)
   // --- calculations ---
   const total = todos.length
   const completed = todos.filter(todo => todo.completed).length
@@ -18,8 +19,8 @@ export default function StatsScreen() {
   const progress = (percentage / 100) * circumference
 
   return (
-    <ThemedView style={styles.container}>
-      <Text style={styles.title}>Statistics Overview</Text>
+    <ThemedView style={[styles.container, { backgroundColor: theme === 'light' ? '#F5F5F5' : '#1A1A1A' }]}>
+      <ThemedText style={styles.title}>Statistics Overview</ThemedText>
 
       <View style={styles.chartContainer}>
         <Svg width={160} height={160}>
@@ -28,7 +29,7 @@ export default function StatsScreen() {
             cx="80"
             cy="80"
             r={radius}
-            stroke="#eee"
+            stroke={theme === 'light' ? '#eee' : '#333'}
             strokeWidth={strokeWidth}
             fill="none"
           />
@@ -47,15 +48,15 @@ export default function StatsScreen() {
         </Svg>
 
         <View style={styles.percentTextContainer}>
-          <Text style={styles.percentText}>{percentage}%</Text>
+          <ThemedText style={styles.percentText}>{percentage}%</ThemedText>
         </View>
       </View>
 
-      <Text style={styles.caption}>
+      <ThemedText style={styles.caption}>
         {percentage === 100
           ? '🎉 You finished everything!'
           : 'Keep going! Consistency builds mastery 💪'}
-      </Text>
+      </ThemedText>
     </ThemedView>
   )
 }
@@ -66,13 +67,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
-    backgroundColor: '#F5F5F5',
   },
   title: {
     fontSize: 20,
     fontWeight: '600',
     marginBottom: 24,
-    color: '#333',
   },
   chartContainer: {
     position: 'relative',
@@ -88,17 +87,14 @@ const styles = StyleSheet.create({
   percentText: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#0a72eb',
   },
   detailText: {
     fontSize: 16,
-    color: '#555',
     marginVertical: 4,
   },
   caption: {
     marginTop: 20,
     fontSize: 14,
-    color: '#777',
     textAlign: 'center',
   },
 })

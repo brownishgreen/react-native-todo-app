@@ -1,7 +1,8 @@
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useModalStore } from '@/stores/useModalStore'
 import { buttonStyles } from '@/styles/buttonStyles'
-
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 // --- component ---
 export default function CompletionModal() {
   const { isVisible, closeModal } = useModalStore()
@@ -12,19 +13,19 @@ export default function CompletionModal() {
       animationType="fade"
       transparent
     >
-      <View style={styles.overlay}>
-        <View style={styles.modalBox}>
-          <Text style={styles.title}>🎉 All tasks completed!</Text>
-          <Text style={styles.subtitle}>Good job! 😍</Text>
+      <ThemedView style={styles.overlay}>
+        <ThemedView style={styles.modalBox}>
+          <ThemedText style={styles.title}>🎉 All tasks completed!</ThemedText>
+          <ThemedText style={styles.subtitle}>Good job! 😍</ThemedText>
 
           <TouchableOpacity
             style={[buttonStyles.base, buttonStyles.primary]}
             onPress={closeModal}
           >
-            <Text style={buttonStyles.text}>Continue</Text>
+            <ThemedText style={buttonStyles.text}>Continue</ThemedText>
           </TouchableOpacity>
-        </View>
-      </View>
+        </ThemedView>
+      </ThemedView>
     </Modal>
   )
 }
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
   },
   modalBox: {
     width: '80%',
-    backgroundColor: '#fff',
     borderRadius: 16,
     padding: 24,
     alignItems: 'center',
@@ -51,17 +51,14 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007bff',
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
   buttonText: {
-    color: '#fff',
     fontWeight: '500',
     fontSize: 14,
   },
