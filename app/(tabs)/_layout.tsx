@@ -1,7 +1,13 @@
 import { Tabs } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
 import { useThemeStore } from '@/stores/useThemeStore'
+import { useFonts } from 'expo-font'
+
 export default function RootLayout() {
+
+  const [fontsLoaded] = useFonts({
+    'EB-Garamond': require('../../assets/fonts/EBGaramond-VariableFont_wght.ttf'),
+  })
 
   const theme = useThemeStore((state) => state.theme)
   const isDarkMode = theme === 'dark'
@@ -19,6 +25,7 @@ export default function RootLayout() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '500',
+          fontFamily: 'EB-Garamond',
         },
         tabBarIconStyle: {
           marginBottom: -2,
