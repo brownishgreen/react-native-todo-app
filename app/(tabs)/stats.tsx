@@ -1,14 +1,104 @@
 import { View, Text, StyleSheet } from 'react-native'
+import { useTodoStore } from '@/stores/todoStore'
+import { ThemedView } from '@/components/ThemedView'
+import Svg, { Circle } from 'react-native-svg'
 
 export default function StatsScreen() {
+  const { todos } = useTodoStore()
+
+  // --- calculations ---
+  const total = todos.length
+  const completed = todos.filter(todo => todo.completed).length
+  const percentage = total === 0 ? 0 : Math.round((completed / total) * 100)
+
+  // --- chart calculations ---
+  const radius = 60
+  const strokeWidth = 10
+  const circumference = 2 * Math.PI * radius
+  const progress = (percentage / 100) * circumference
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>📊 Statistics Coming Soon</Text>
-    </View>
+    <ThemedView style={styles.container}>
+      <Text style={styles.title}>Statistics Overview</Text>
+
+      <View style={styles.chartContainer}>
+        <Svg width={160} height={160}>
+          {/* Background circle */}
+          <Circle
+            cx="80"
+            cy="80"
+            r={radius}
+            stroke="#eee"
+            strokeWidth={strokeWidth}
+            fill="none"
+          />
+          {/* Progress circle */}
+          <Circle
+            cx="80"
+            cy="80"
+            r={radius}
+            stroke="#0a72eb"
+            strokeWidth={strokeWidth}
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - progress}
+            strokeLinecap="round"
+          />
+        </Svg>
+
+        <View style={styles.percentTextContainer}>
+          <Text style={styles.percentText}>{percentage}%</Text>
+        </View>
+      </View>
+
+      <Text style={styles.caption}>
+        {percentage === 100
+          ? '🎉 You finished everything!'
+          : 'Keep going! Consistency builds mastery 💪'}
+      </Text>
+    </ThemedView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  text: { fontSize: 16, color: '#666' },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+    backgroundColor: '#F5F5F5',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 24,
+    color: '#333',
+  },
+  chartContainer: {
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  percentTextContainer: {
+    position: 'absolute',
+    top: '40%',
+    alignItems: 'center',
+  },
+  percentText: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#0a72eb',
+  },
+  detailText: {
+    fontSize: 16,
+    color: '#555',
+    marginVertical: 4,
+  },
+  caption: {
+    marginTop: 20,
+    fontSize: 14,
+    color: '#777',
+    textAlign: 'center',
+  },
 })
