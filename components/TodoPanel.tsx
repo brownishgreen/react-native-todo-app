@@ -30,12 +30,13 @@ export default function TodoPanel({ input, todos, onChangeInput, onAdd, onToggle
       {/* Input */}
       <ThemedView style={styles.inputRow}>
         <TextInput
-          style={[styles.input, { color: theme === 'light' ? '#333' : '#EDEDED' }]}
-          placeholder="New Task"
+          style={[styles.input, { color: theme === 'light' ? '#333' : '#EDEDED', fontFamily: 'EB-Garamond' }]}
+          placeholder="New Task... "
           value={input}
           onChangeText={onChangeInput}
           returnKeyType="done"
           onSubmitEditing={onAdd}
+
         />
         <TouchableOpacity style={[buttonStyles.primary, buttonStyles.base]} onPress={onAdd}>
           <ThemedText style={buttonStyles.text}>Add</ThemedText>
