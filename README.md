@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Minimal Todo App
 
-## Get started
+A clean, minimalistic to-do app built with **React Native + Expo**.
 
-1. Install dependencies
+* Built with **React Native + Expo SDK 54**
+* Cross-platform: iOS / Android / Web
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## Demo
 
-   ```bash
-   npx expo start
-   ```
+* 🍏 [iOS Build (Expo Cloud)](https://expo.dev/accounts/brownishgreen/projects/minimal-todo-app/builds/f634bfd8-1f53-436c-8bd5-7f29119dc2d7)
+* 🤖 [Android Build (Expo Cloud)](https://expo.dev/accounts/brownishgreen/projects/minimal-todo-app/builds/9c2d9775-b545-46ff-8e37-1c92c12173dc)
 
-In the output, you'll find options to open the app in a
+（可用手機掃描 QR Code 安裝體驗，或下載 `.apk` / `.app` 檔）
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Features 功能與特色
 
-## Get a fresh project
+1. **Add & Delete Tasks** – 新增 / 刪除待辦
 
-When you're ready, run:
+   * 快速記錄靈感與每日任務。
+
+2. **Task Completion Toggle** – 一鍵切換完成狀態
+
+   * 點擊即可標記完成，保持清晰的進度感。
+
+3. **Minimal UI** – 專注、無干擾介面
+
+   * 採用柔和灰階與留白設計，讓使用者心境更安定。
+
+4. **Cross-Platform Support** – iOS / Android / Web
+
+   * 基於 Expo 的跨平台框架，隨時同步。
+
+---
+
+## Tech Stack 技術棧
+
+* **React Native (Expo SDK 54)**
+* **Expo Router**
+* **TypeScript** 
+* **EAS Build**
+* **ESLint + Prettier** 
+
+---
+
+## Project Setup 專案設定
 
 ```bash
-npm run reset-project
+# Clone 專案
+git clone https://github.com/your-username/minimal-todo-app.git
+
+cd minimal-todo-app
+
+# 安裝依賴
+npm install
+
+# 啟動開發模式（iOS / Android / Web）
+npx start
+
+# 打包建置（使用 EAS）
+eas build --platform all --profile preview
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
