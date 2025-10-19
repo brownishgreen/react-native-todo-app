@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { ThemedView } from '../../components/ThemedView'
-import Header from '../../components/Header'
-import TodoPanel from '../../components/TodoPanel'
-import { useTodoStore } from '../../stores/todoStore'
-import CompletionModal from '../../components/CompletionModal'
-import { useModalStore } from '../../stores/useModalStore'
+import CompletionModal from '@/components/CompletionModal'
+import Header from '@/components/Header'
+import { ThemedView } from '@/components/ThemedView'
+import TodoPanel from '@/components/TodoPanel'
+import { useTodoStore } from '@/stores/todoStore'
+import { useModalStore } from '@/stores/useModalStore'
 
 // --- component ---
-export default function HomeScreen() {
+export default function TasksScreen() {
   const {
     input,
     todos,
@@ -23,7 +23,7 @@ export default function HomeScreen() {
       openModal()
     }
   }, [todos])
-  
+
   return (
     <ThemedView style={{ flex: 1, padding: 24, gap: 12 }}>
       <Header />
